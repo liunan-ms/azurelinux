@@ -1,0 +1,41 @@
+# Re-disable os-prober by default. The Fedora grub2 package carries three
+# downstream reverts -- Patch0001, Patch0002 and Patch0003 -- that undo upstream's
+# os-prober changes (re-enabling it by default and re-introducing an "it's" typo).
+# Automatic, silent execution of os-prober is a known attack vector, so Azure
+# Linux restores upstream GRUB's secure default. Rather than dropping the Fedora
+# reverts (which would shift line numbers and break the context of later
+# patches), these three trailing patches are appended to the end of the
+# grub.patches series and are exact git reverts of the Fedora reverts (restoring
+# the upstream GRUB commits referenced in `commits`).
+#
+# NOTE: grub2's patch series lives in the %include'd grub.patches file (Source11),
+# not as inline PatchNNNN: tags in the spec, so the patch-add overlay cannot see
+# the existing 382 patches to number new ones correctly. Instead we stage the
+# files with file-add and append their Patch0383/Patch0384/Patch0385 entries to
+# grub.patches directly (see overlay 0003).
+[metadata]
+category = "backport-dist-git"
+upstreamable = false
+commits = [
+    "https://git.savannah.gnu.org/cgit/grub.git/commit/?id=e346414725a70e5c74ee87ca14e580c66f517666",
+    "https://git.savannah.gnu.org/cgit/grub.git/commit/?id=54e0a1bbf1e9106901a557195bb35e5e20fb3925",
+    "https://git.savannah.gnu.org/cgit/grub.git/commit/?id=722737630889607c3b5761f1f5a48f1674cd2821",
+]
+
+[[overlays]]
+description = "Stage os-prober revert patch 0383 (revert of Fedora Patch0003)"
+type = "file-add"
+file = "0383-Revert-Revert-templates-Disable-the-os-prober-by-default.patch"
+source = "../0383-Revert-Revert-templates-Disable-the-os-prober-by-default.patch"
+
+[[overlays]]
+description = "Stage os-prober revert patch 0384 (revert of Fedora Patch0002), restoring GRUB_DISABLE_OS_PROBER=true"
+type = "file-add"
+file = "0384-Revert-Revert-templates-Properly-disable-the-os-prober-by-d.patch"
+source = "../0384-Revert-Revert-templates-Properly-disable-the-os-prober-by-d.patch"
+
+[[overlays]]
+description = "Stage os-prober revert patch 0385 (revert of Fedora Patch0001), restoring upstream's 'Its output' typo fix"
+type = "file-add"
+file = "0385-Revert-Revert-templates-Fix-user-facing-typo-with-an.patch"
+source = "../0385-Revert-Revert-templates-Fix-user-facing-typo-with-an.patch"

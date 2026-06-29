@@ -1,0 +1,12 @@
+# Microsoft-authored sos Policy fix so os_release_id matches the os-release
+# ID field on Azure Linux. Upstreamed as sosreport/sos commit fcc6a5f4.
+[metadata]
+category = "backport-dist-git"
+upstreamable = true
+commits = ["https://github.com/sosreport/sos/commit/fcc6a5f498bc1e7edf7c2f2acf0f506ced0f21dc"]
+
+[[overlays]]
+description = "Add os_release_id value to match os-release ID"
+type = "patch-add"
+file = "Policy-Add-os_release_id-check.patch"
+source = "../Policy-Add-os_release_id-check.patch"

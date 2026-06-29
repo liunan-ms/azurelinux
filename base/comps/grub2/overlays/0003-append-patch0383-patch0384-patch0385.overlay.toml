@@ -1,0 +1,21 @@
+# Append the staged os-prober revert patches (0383/0384/0385, staged by overlay
+# 0002) to the end of the grub.patches series.
+[metadata]
+category = "azl-pruning"
+upstreamable = false
+
+[[overlays]]
+description = "Append Patch0383/Patch0384/Patch0385 (os-prober reverts) to the end of the grub.patches series"
+type = "file-search-replace"
+file = "grub.patches"
+# Match the exact Patch0382 line. file-search-replace does a literal replacement
+# (no regex backreferences), so the matched text is re-emitted verbatim ahead of
+# the three appended os-prober reverts. Matching the full filename is deliberate:
+# the regex and replacement must stay in lockstep, and if Fedora ever renames the
+# 0382 patch this overlay fails loudly at render time rather than silently
+# rewriting the line back to the stale name.
+regex = 'Patch0382: 0382-Set-correctly-the-memory-attributes-for-the-kernel-P\.patch'
+replacement = '''Patch0382: 0382-Set-correctly-the-memory-attributes-for-the-kernel-P.patch
+Patch0383: 0383-Revert-Revert-templates-Disable-the-os-prober-by-default.patch
+Patch0384: 0384-Revert-Revert-templates-Properly-disable-the-os-prober-by-d.patch
+Patch0385: 0385-Revert-Revert-templates-Fix-user-facing-typo-with-an.patch'''

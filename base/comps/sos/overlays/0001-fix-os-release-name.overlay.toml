@@ -1,0 +1,12 @@
+# Microsoft-authored sos Policy fix so os_release_name matches the os-release
+# NAME field on Azure Linux. Upstreamed as sosreport/sos commit 48c34be5.
+[metadata]
+category = "backport-dist-git"
+upstreamable = true
+commits = ["https://github.com/sosreport/sos/commit/48c34be5c676408a48aab663ac3497a5cdb27f61"]
+
+[[overlays]]
+description = "Fix os_release_name value to match os-release NAME"
+type = "patch-add"
+file = "Policy-Fix-os_release_name-value.patch"
+source = "../Policy-Fix-os_release_name-value.patch"

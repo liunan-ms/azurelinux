@@ -1,0 +1,12 @@
+# Backport of upstream sos PR sosreport/sos#4311 (merged as b8ba38e8, closes
+# issue #4308): initial dnf5 support in the dnf plugin.
+[metadata]
+category = "backport-dist-git"
+upstreamable = true
+commits = ["https://github.com/sosreport/sos/commit/b8ba38e844c085abefca44b1b11b9522a18b8fa2"]
+
+[[overlays]]
+description = "Add dnf5 support in dnf plugin"
+type = "patch-add"
+file = "dnf-initial-dnf5-support-in-dnf-plugin.patch"
+source = "../dnf-initial-dnf5-support-in-dnf-plugin.patch"
